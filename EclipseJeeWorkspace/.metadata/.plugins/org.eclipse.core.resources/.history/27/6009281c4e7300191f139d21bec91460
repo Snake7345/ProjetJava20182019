@@ -1,0 +1,120 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the package database table.
+ * 
+ */
+@Entity
+@Table(name="package")
+@NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
+public class Package implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idPackage;
+
+	@Column(nullable=false, length=255)
+	private String descriptionPackage;
+
+	@Column(nullable=false, length=100)
+	private String nomPackage;
+
+	//bi-directional many-to-many association to OptionsVoiture
+	@ManyToMany(mappedBy="packages")
+	private List<OptionsVoiture> optionsVoitures;
+
+	//bi-directional many-to-one association to OptionsVoiturePackage
+	@OneToMany(mappedBy="package")
+	private List<OptionsVoiturePackage> optionsVoiturePackages;
+
+	//bi-directional many-to-one association to Voiture
+	@OneToMany(mappedBy="package")
+	private List<Voiture> voitures;
+
+	public Package() {
+	}
+
+	public int getIdPackage() {
+		return this.idPackage;
+	}
+
+	public void setIdPackage(int idPackage) {
+		this.idPackage = idPackage;
+	}
+
+	public String getDescriptionPackage() {
+		return this.descriptionPackage;
+	}
+
+	public void setDescriptionPackage(String descriptionPackage) {
+		this.descriptionPackage = descriptionPackage;
+	}
+
+	public String getNomPackage() {
+		return this.nomPackage;
+	}
+
+	public void setNomPackage(String nomPackage) {
+		this.nomPackage = nomPackage;
+	}
+
+	public List<OptionsVoiture> getOptionsVoitures() {
+		return this.optionsVoitures;
+	}
+
+	public void setOptionsVoitures(List<OptionsVoiture> optionsVoitures) {
+		this.optionsVoitures = optionsVoitures;
+	}
+
+	public List<OptionsVoiturePackage> getOptionsVoiturePackages() {
+		return this.optionsVoiturePackages;
+	}
+
+	public void setOptionsVoiturePackages(List<OptionsVoiturePackage> optionsVoiturePackages) {
+		this.optionsVoiturePackages = optionsVoiturePackages;
+	}
+
+	public OptionsVoiturePackage addOptionsVoiturePackage(OptionsVoiturePackage optionsVoiturePackage) {
+		getOptionsVoiturePackages().add(optionsVoiturePackage);
+		optionsVoiturePackage.setPackage(this);
+
+		return optionsVoiturePackage;
+	}
+
+	public OptionsVoiturePackage removeOptionsVoiturePackage(OptionsVoiturePackage optionsVoiturePackage) {
+		getOptionsVoiturePackages().remove(optionsVoiturePackage);
+		optionsVoiturePackage.setPackage(null);
+
+		return optionsVoiturePackage;
+	}
+
+	public List<Voiture> getVoitures() {
+		return this.voitures;
+	}
+
+	public void setVoitures(List<Voiture> voitures) {
+		this.voitures = voitures;
+	}
+
+	public Voiture addVoiture(Voiture voiture) {
+		getVoitures().add(voiture);
+		voiture.setPackage(this);
+
+		return voiture;
+	}
+
+	public Voiture removeVoiture(Voiture voiture) {
+		getVoitures().remove(voiture);
+		voiture.setPackage(null);
+
+		return voiture;
+	}
+
+}

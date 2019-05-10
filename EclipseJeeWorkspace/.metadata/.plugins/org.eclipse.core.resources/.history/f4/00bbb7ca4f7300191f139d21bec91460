@@ -1,0 +1,103 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the options_voiture database table.
+ * 
+ */
+@Entity
+@Table(name="options_voiture")
+@NamedQuery(name="OptionsVoiture.findAll", query="SELECT o FROM OptionsVoiture o")
+public class OptionsVoiture implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idOptions;
+
+	@Column(nullable=false, length=50)
+	private String nomOptions;
+
+	@Column(nullable=false)
+	private float prix;
+
+	//bi-directional many-to-many association to Package
+	@ManyToMany
+	@JoinTable(
+		name="options_voiture_package"
+		, joinColumns={
+			@JoinColumn(name="Options_voiture_idOptions", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Package_IdPackage", nullable=false)
+			}
+		)
+	private List<Package> packages;
+
+	//bi-directional many-to-one association to OptionsVoiturePackage
+	@OneToMany(mappedBy="optionsVoiture")
+	private List<OptionsVoiturePackage> optionsVoiturePackages;
+
+	public OptionsVoiture() {
+	}
+
+	public int getIdOptions() {
+		return this.idOptions;
+	}
+
+	public void setIdOptions(int idOptions) {
+		this.idOptions = idOptions;
+	}
+
+	public String getNomOptions() {
+		return this.nomOptions;
+	}
+
+	public void setNomOptions(String nomOptions) {
+		this.nomOptions = nomOptions;
+	}
+
+	public float getPrix() {
+		return this.prix;
+	}
+
+	public void setPrix(float prix) {
+		this.prix = prix;
+	}
+
+	public List<Package> getPackages() {
+		return this.packages;
+	}
+
+	public void setPackages(List<Package> packages) {
+		this.packages = packages;
+	}
+
+	public List<OptionsVoiturePackage> getOptionsVoiturePackages() {
+		return this.optionsVoiturePackages;
+	}
+
+	public void setOptionsVoiturePackages(List<OptionsVoiturePackage> optionsVoiturePackages) {
+		this.optionsVoiturePackages = optionsVoiturePackages;
+	}
+
+	public OptionsVoiturePackage addOptionsVoiturePackage(OptionsVoiturePackage optionsVoiturePackage) {
+		getOptionsVoiturePackages().add(optionsVoiturePackage);
+		optionsVoiturePackage.setOptionsVoiture(this);
+
+		return optionsVoiturePackage;
+	}
+
+	public OptionsVoiturePackage removeOptionsVoiturePackage(OptionsVoiturePackage optionsVoiturePackage) {
+		getOptionsVoiturePackages().remove(optionsVoiturePackage);
+		optionsVoiturePackage.setOptionsVoiture(null);
+
+		return optionsVoiturePackage;
+	}
+
+}

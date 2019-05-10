@@ -1,0 +1,105 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the entrepot database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Entrepot.findAll", query="SELECT e FROM Entrepot e")
+public class Entrepot implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private int idEntrepot;
+
+	private String nomEntrepot;
+
+	//bi-directional many-to-many association to Adresse
+	@ManyToMany(mappedBy="entrepots")
+	private List<Adresse> adresses;
+
+	//bi-directional many-to-one association to Personne
+	@OneToMany(mappedBy="entrepot")
+	private List<Personne> personnes;
+
+	//bi-directional many-to-one association to Voiture
+	@OneToMany(mappedBy="entrepot")
+	private List<Voiture> voitures;
+
+	public Entrepot() {
+	}
+
+	public int getIdEntrepot() {
+		return this.idEntrepot;
+	}
+
+	public void setIdEntrepot(int idEntrepot) {
+		this.idEntrepot = idEntrepot;
+	}
+
+	public String getNomEntrepot() {
+		return this.nomEntrepot;
+	}
+
+	public void setNomEntrepot(String nomEntrepot) {
+		this.nomEntrepot = nomEntrepot;
+	}
+
+	public List<Adresse> getAdresses() {
+		return this.adresses;
+	}
+
+	public void setAdresses(List<Adresse> adresses) {
+		this.adresses = adresses;
+	}
+
+	public List<Personne> getPersonnes() {
+		return this.personnes;
+	}
+
+	public void setPersonnes(List<Personne> personnes) {
+		this.personnes = personnes;
+	}
+
+	public Personne addPersonne(Personne personne) {
+		getPersonnes().add(personne);
+		personne.setEntrepot(this);
+
+		return personne;
+	}
+
+	public Personne removePersonne(Personne personne) {
+		getPersonnes().remove(personne);
+		personne.setEntrepot(null);
+
+		return personne;
+	}
+
+	public List<Voiture> getVoitures() {
+		return this.voitures;
+	}
+
+	public void setVoitures(List<Voiture> voitures) {
+		this.voitures = voitures;
+	}
+
+	public Voiture addVoiture(Voiture voiture) {
+		getVoitures().add(voiture);
+		voiture.setEntrepot(this);
+
+		return voiture;
+	}
+
+	public Voiture removeVoiture(Voiture voiture) {
+		getVoitures().remove(voiture);
+		voiture.setEntrepot(null);
+
+		return voiture;
+	}
+
+}

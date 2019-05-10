@@ -1,0 +1,65 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the personne_adresse database table.
+ * 
+ */
+@Entity
+@Table(name="personne_adresse")
+@NamedQuery(name="PersonneAdresse.findAll", query="SELECT p FROM PersonneAdresse p")
+public class PersonneAdresse implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int id_Personne_Adresse;
+
+	//bi-directional many-to-one association to Adresse
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="Adresse_CP_IdCP", referencedColumnName="CP_IdCP", nullable=false),
+		@JoinColumn(name="Adresse_IdAdresse", referencedColumnName="IdAdresse", nullable=false)
+		})
+	private Adresse adresse;
+
+	//bi-directional many-to-one association to Personne
+	@ManyToOne
+	@JoinColumns({
+		@JoinColumn(name="Personne_Entrepot_idEntrepot", referencedColumnName="Entrepot_idEntrepot", nullable=false),
+		@JoinColumn(name="Personne_IdPersonne", referencedColumnName="IdPersonne", nullable=false)
+		})
+	private Personne personne;
+
+	public PersonneAdresse() {
+	}
+
+	public int getId_Personne_Adresse() {
+		return this.id_Personne_Adresse;
+	}
+
+	public void setId_Personne_Adresse(int id_Personne_Adresse) {
+		this.id_Personne_Adresse = id_Personne_Adresse;
+	}
+
+	public Adresse getAdresse() {
+		return this.adresse;
+	}
+
+	public void setAdresse(Adresse adresse) {
+		this.adresse = adresse;
+	}
+
+	public Personne getPersonne() {
+		return this.personne;
+	}
+
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
+	}
+
+}

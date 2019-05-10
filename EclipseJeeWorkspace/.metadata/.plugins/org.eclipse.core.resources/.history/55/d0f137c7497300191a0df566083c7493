@@ -1,0 +1,31 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the voiture_moteur database table.
+ * 
+ */
+@Entity
+@Table(name="voiture_moteur")
+@NamedQuery(name="VoitureMoteur.findAll", query="SELECT v FROM VoitureMoteur v")
+public class VoitureMoteur implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private VoitureMoteurPK id;
+
+	public VoitureMoteur() {
+	}
+
+	public VoitureMoteurPK getId() {
+		return this.id;
+	}
+
+	public void setId(VoitureMoteurPK id) {
+		this.id = id;
+	}
+
+}

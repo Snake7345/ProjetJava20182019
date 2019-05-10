@@ -1,0 +1,56 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+/**
+ * The primary key class for the facture database table.
+ * 
+ */
+@Embeddable
+public class FacturePK implements Serializable {
+	//default serial version id, required for serializable classes.
+	private static final long serialVersionUID = 1L;
+
+	private int idFacture;
+
+	@Column(insertable=false, updatable=false)
+	private int mode_payment_IdMode;
+
+	public FacturePK() {
+	}
+	public int getIdFacture() {
+		return this.idFacture;
+	}
+	public void setIdFacture(int idFacture) {
+		this.idFacture = idFacture;
+	}
+	public int getMode_payment_IdMode() {
+		return this.mode_payment_IdMode;
+	}
+	public void setMode_payment_IdMode(int mode_payment_IdMode) {
+		this.mode_payment_IdMode = mode_payment_IdMode;
+	}
+
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof FacturePK)) {
+			return false;
+		}
+		FacturePK castOther = (FacturePK)other;
+		return 
+			(this.idFacture == castOther.idFacture)
+			&& (this.mode_payment_IdMode == castOther.mode_payment_IdMode);
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int hash = 17;
+		hash = hash * prime + this.idFacture;
+		hash = hash * prime + this.mode_payment_IdMode;
+		
+		return hash;
+	}
+}

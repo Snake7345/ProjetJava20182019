@@ -1,0 +1,31 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the role_personne database table.
+ * 
+ */
+@Entity
+@Table(name="role_personne")
+@NamedQuery(name="RolePersonne.findAll", query="SELECT r FROM RolePersonne r")
+public class RolePersonne implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private RolePersonnePK id;
+
+	public RolePersonne() {
+	}
+
+	public RolePersonnePK getId() {
+		return this.id;
+	}
+
+	public void setId(RolePersonnePK id) {
+		this.id = id;
+	}
+
+}

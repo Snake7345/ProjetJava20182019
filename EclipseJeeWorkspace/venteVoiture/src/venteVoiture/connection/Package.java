@@ -1,0 +1,108 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the package database table.
+ * 
+ */
+@Entity
+@Table(name="package")
+@NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
+public class Package implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idPackage;
+
+	@Column(nullable=false, length=255)
+	private String descriptionPackage;
+
+	@Column(nullable=false, length=100)
+	private String nomPackage;
+
+	//bi-directional many-to-one association to Voiture
+	@OneToMany(mappedBy="package")
+	private List<Voiture> voitures;
+
+	//bi-directional many-to-one association to OptionsPackage
+	@OneToMany(mappedBy="package")
+	private List<OptionsPackage> optionsPackages;
+
+	public Package() {
+	}
+
+	public int getIdPackage() {
+		return this.idPackage;
+	}
+
+	public void setIdPackage(int idPackage) {
+		this.idPackage = idPackage;
+	}
+
+	public String getDescriptionPackage() {
+		return this.descriptionPackage;
+	}
+
+	public void setDescriptionPackage(String descriptionPackage) {
+		this.descriptionPackage = descriptionPackage;
+	}
+
+	public String getNomPackage() {
+		return this.nomPackage;
+	}
+
+	public void setNomPackage(String nomPackage) {
+		this.nomPackage = nomPackage;
+	}
+
+	public List<Voiture> getVoitures() {
+		return this.voitures;
+	}
+
+	public void setVoitures(List<Voiture> voitures) {
+		this.voitures = voitures;
+	}
+
+	public Voiture addVoiture(Voiture voiture) {
+		getVoitures().add(voiture);
+		voiture.setPackage(this);
+
+		return voiture;
+	}
+
+	public Voiture removeVoiture(Voiture voiture) {
+		getVoitures().remove(voiture);
+		voiture.setPackage(null);
+
+		return voiture;
+	}
+
+	public List<OptionsPackage> getOptionsPackages() {
+		return this.optionsPackages;
+	}
+
+	public void setOptionsPackages(List<OptionsPackage> optionsPackages) {
+		this.optionsPackages = optionsPackages;
+	}
+
+	public OptionsPackage addOptionsPackage(OptionsPackage optionsPackage) {
+		getOptionsPackages().add(optionsPackage);
+		optionsPackage.setPackage(this);
+
+		return optionsPackage;
+	}
+
+	public OptionsPackage removeOptionsPackage(OptionsPackage optionsPackage) {
+		getOptionsPackages().remove(optionsPackage);
+		optionsPackage.setPackage(null);
+
+		return optionsPackage;
+	}
+
+}

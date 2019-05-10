@@ -1,0 +1,59 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the options_voiture_package database table.
+ * 
+ */
+@Entity
+@Table(name="options_voiture_package")
+@NamedQuery(name="OptionsVoiturePackage.findAll", query="SELECT o FROM OptionsVoiturePackage o")
+public class OptionsVoiturePackage implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int id_Options_voiture_Package;
+
+	//bi-directional many-to-one association to OptionsVoiture
+	@ManyToOne
+	@JoinColumn(name="Options_voiture_idOptions", nullable=false)
+	private OptionsVoiture optionsVoiture;
+
+	//bi-directional many-to-one association to Package
+	@ManyToOne
+	@JoinColumn(name="Package_IdPackage", nullable=false)
+	private Package package;
+
+	public OptionsVoiturePackage() {
+	}
+
+	public int getId_Options_voiture_Package() {
+		return this.id_Options_voiture_Package;
+	}
+
+	public void setId_Options_voiture_Package(int id_Options_voiture_Package) {
+		this.id_Options_voiture_Package = id_Options_voiture_Package;
+	}
+
+	public OptionsVoiture getOptionsVoiture() {
+		return this.optionsVoiture;
+	}
+
+	public void setOptionsVoiture(OptionsVoiture optionsVoiture) {
+		this.optionsVoiture = optionsVoiture;
+	}
+
+	public Package getPackage() {
+		return this.package;
+	}
+
+	public void setPackage(Package package) {
+		this.package = package;
+	}
+
+}

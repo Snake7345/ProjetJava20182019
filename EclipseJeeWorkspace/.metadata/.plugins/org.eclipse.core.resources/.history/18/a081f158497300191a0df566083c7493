@@ -1,0 +1,56 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+/**
+ * The primary key class for the personne database table.
+ * 
+ */
+@Embeddable
+public class PersonnePK implements Serializable {
+	//default serial version id, required for serializable classes.
+	private static final long serialVersionUID = 1L;
+
+	private int idPersonne;
+
+	@Column(insertable=false, updatable=false)
+	private int entrepot_idEntrepot;
+
+	public PersonnePK() {
+	}
+	public int getIdPersonne() {
+		return this.idPersonne;
+	}
+	public void setIdPersonne(int idPersonne) {
+		this.idPersonne = idPersonne;
+	}
+	public int getEntrepot_idEntrepot() {
+		return this.entrepot_idEntrepot;
+	}
+	public void setEntrepot_idEntrepot(int entrepot_idEntrepot) {
+		this.entrepot_idEntrepot = entrepot_idEntrepot;
+	}
+
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof PersonnePK)) {
+			return false;
+		}
+		PersonnePK castOther = (PersonnePK)other;
+		return 
+			(this.idPersonne == castOther.idPersonne)
+			&& (this.entrepot_idEntrepot == castOther.entrepot_idEntrepot);
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int hash = 17;
+		hash = hash * prime + this.idPersonne;
+		hash = hash * prime + this.entrepot_idEntrepot;
+		
+		return hash;
+	}
+}

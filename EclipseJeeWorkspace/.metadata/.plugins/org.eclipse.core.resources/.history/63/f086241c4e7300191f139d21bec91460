@@ -1,0 +1,138 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the personne database table.
+ * 
+ */
+@Entity
+@Table(name="personne")
+@NamedQuery(name="Personne.findAll", query="SELECT p FROM Personne p")
+public class Personne implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private PersonnePK id;
+
+	@Column(nullable=false, length=45)
+	private String mailPersonne;
+
+	@Column(nullable=false, length=45)
+	private String mdpPersonne;
+
+	@Column(nullable=false, length=45)
+	private String nomPersonne;
+
+	@Column(nullable=false, length=50)
+	private String prenomPersonne;
+
+	//bi-directional many-to-many association to Adresse
+	@ManyToMany
+	@JoinTable(
+		name="personne_adresse"
+		, joinColumns={
+			@JoinColumn(name="Personne_Entrepot_idEntrepot", referencedColumnName="Entrepot_idEntrepot", nullable=false),
+			@JoinColumn(name="Personne_IdPersonne", referencedColumnName="IdPersonne", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Adresse_CP_IdCP", referencedColumnName="CP_IdCP", nullable=false),
+			@JoinColumn(name="Adresse_IdAdresse", referencedColumnName="IdAdresse", nullable=false)
+			}
+		)
+	private List<Adresse> adresses;
+
+	//bi-directional many-to-one association to Entrepot
+	@ManyToOne
+	@JoinColumn(name="Entrepot_idEntrepot", nullable=false, insertable=false, updatable=false)
+	private Entrepot entrepot;
+
+	//bi-directional many-to-one association to PersonneAdresse
+	@OneToMany(mappedBy="personne")
+	private List<PersonneAdresse> personneAdresses;
+
+	public Personne() {
+	}
+
+	public PersonnePK getId() {
+		return this.id;
+	}
+
+	public void setId(PersonnePK id) {
+		this.id = id;
+	}
+
+	public String getMailPersonne() {
+		return this.mailPersonne;
+	}
+
+	public void setMailPersonne(String mailPersonne) {
+		this.mailPersonne = mailPersonne;
+	}
+
+	public String getMdpPersonne() {
+		return this.mdpPersonne;
+	}
+
+	public void setMdpPersonne(String mdpPersonne) {
+		this.mdpPersonne = mdpPersonne;
+	}
+
+	public String getNomPersonne() {
+		return this.nomPersonne;
+	}
+
+	public void setNomPersonne(String nomPersonne) {
+		this.nomPersonne = nomPersonne;
+	}
+
+	public String getPrenomPersonne() {
+		return this.prenomPersonne;
+	}
+
+	public void setPrenomPersonne(String prenomPersonne) {
+		this.prenomPersonne = prenomPersonne;
+	}
+
+	public List<Adresse> getAdresses() {
+		return this.adresses;
+	}
+
+	public void setAdresses(List<Adresse> adresses) {
+		this.adresses = adresses;
+	}
+
+	public Entrepot getEntrepot() {
+		return this.entrepot;
+	}
+
+	public void setEntrepot(Entrepot entrepot) {
+		this.entrepot = entrepot;
+	}
+
+	public List<PersonneAdresse> getPersonneAdresses() {
+		return this.personneAdresses;
+	}
+
+	public void setPersonneAdresses(List<PersonneAdresse> personneAdresses) {
+		this.personneAdresses = personneAdresses;
+	}
+
+	public PersonneAdresse addPersonneAdress(PersonneAdresse personneAdress) {
+		getPersonneAdresses().add(personneAdress);
+		personneAdress.setPersonne(this);
+
+		return personneAdress;
+	}
+
+	public PersonneAdresse removePersonneAdress(PersonneAdresse personneAdress) {
+		getPersonneAdresses().remove(personneAdress);
+		personneAdress.setPersonne(null);
+
+		return personneAdress;
+	}
+
+}

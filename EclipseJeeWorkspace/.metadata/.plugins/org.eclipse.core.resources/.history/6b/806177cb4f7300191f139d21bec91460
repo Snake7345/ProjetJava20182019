@@ -1,0 +1,101 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+/**
+ * The primary key class for the voiture database table.
+ * 
+ */
+@Embeddable
+public class VoiturePK implements Serializable {
+	//default serial version id, required for serializable classes.
+	private static final long serialVersionUID = 1L;
+
+	@Column(unique=true, nullable=false, length=17)
+	private String idNumChassisVoiture;
+
+	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	private int modele_IdModele;
+
+	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	private int modele_Marque_IdMarque;
+
+	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	private int couleur_IdCouleur;
+
+	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	private int package_IdPackage;
+
+	@Column(insertable=false, updatable=false, unique=true, nullable=false)
+	private int entrepot_idEntrepot;
+
+	public VoiturePK() {
+	}
+	public String getIdNumChassisVoiture() {
+		return this.idNumChassisVoiture;
+	}
+	public void setIdNumChassisVoiture(String idNumChassisVoiture) {
+		this.idNumChassisVoiture = idNumChassisVoiture;
+	}
+	public int getModele_IdModele() {
+		return this.modele_IdModele;
+	}
+	public void setModele_IdModele(int modele_IdModele) {
+		this.modele_IdModele = modele_IdModele;
+	}
+	public int getModele_Marque_IdMarque() {
+		return this.modele_Marque_IdMarque;
+	}
+	public void setModele_Marque_IdMarque(int modele_Marque_IdMarque) {
+		this.modele_Marque_IdMarque = modele_Marque_IdMarque;
+	}
+	public int getCouleur_IdCouleur() {
+		return this.couleur_IdCouleur;
+	}
+	public void setCouleur_IdCouleur(int couleur_IdCouleur) {
+		this.couleur_IdCouleur = couleur_IdCouleur;
+	}
+	public int getPackage_IdPackage() {
+		return this.package_IdPackage;
+	}
+	public void setPackage_IdPackage(int package_IdPackage) {
+		this.package_IdPackage = package_IdPackage;
+	}
+	public int getEntrepot_idEntrepot() {
+		return this.entrepot_idEntrepot;
+	}
+	public void setEntrepot_idEntrepot(int entrepot_idEntrepot) {
+		this.entrepot_idEntrepot = entrepot_idEntrepot;
+	}
+
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+		if (!(other instanceof VoiturePK)) {
+			return false;
+		}
+		VoiturePK castOther = (VoiturePK)other;
+		return 
+			this.idNumChassisVoiture.equals(castOther.idNumChassisVoiture)
+			&& (this.modele_IdModele == castOther.modele_IdModele)
+			&& (this.modele_Marque_IdMarque == castOther.modele_Marque_IdMarque)
+			&& (this.couleur_IdCouleur == castOther.couleur_IdCouleur)
+			&& (this.package_IdPackage == castOther.package_IdPackage)
+			&& (this.entrepot_idEntrepot == castOther.entrepot_idEntrepot);
+	}
+
+	public int hashCode() {
+		final int prime = 31;
+		int hash = 17;
+		hash = hash * prime + this.idNumChassisVoiture.hashCode();
+		hash = hash * prime + this.modele_IdModele;
+		hash = hash * prime + this.modele_Marque_IdMarque;
+		hash = hash * prime + this.couleur_IdCouleur;
+		hash = hash * prime + this.package_IdPackage;
+		hash = hash * prime + this.entrepot_idEntrepot;
+		
+		return hash;
+	}
+}

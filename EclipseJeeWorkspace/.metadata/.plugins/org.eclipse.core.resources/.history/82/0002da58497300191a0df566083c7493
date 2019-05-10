@@ -1,0 +1,89 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the package database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
+public class Package implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private int idPackage;
+
+	private String descriptionPackage;
+
+	private String nomPackage;
+
+	//bi-directional many-to-many association to OptionsVoiture
+	@ManyToMany(mappedBy="packages")
+	private List<OptionsVoiture> optionsVoitures;
+
+	//bi-directional many-to-one association to Voiture
+	@OneToMany(mappedBy="package")
+	private List<Voiture> voitures;
+
+	public Package() {
+	}
+
+	public int getIdPackage() {
+		return this.idPackage;
+	}
+
+	public void setIdPackage(int idPackage) {
+		this.idPackage = idPackage;
+	}
+
+	public String getDescriptionPackage() {
+		return this.descriptionPackage;
+	}
+
+	public void setDescriptionPackage(String descriptionPackage) {
+		this.descriptionPackage = descriptionPackage;
+	}
+
+	public String getNomPackage() {
+		return this.nomPackage;
+	}
+
+	public void setNomPackage(String nomPackage) {
+		this.nomPackage = nomPackage;
+	}
+
+	public List<OptionsVoiture> getOptionsVoitures() {
+		return this.optionsVoitures;
+	}
+
+	public void setOptionsVoitures(List<OptionsVoiture> optionsVoitures) {
+		this.optionsVoitures = optionsVoitures;
+	}
+
+	public List<Voiture> getVoitures() {
+		return this.voitures;
+	}
+
+	public void setVoitures(List<Voiture> voitures) {
+		this.voitures = voitures;
+	}
+
+	public Voiture addVoiture(Voiture voiture) {
+		getVoitures().add(voiture);
+		voiture.setPackage(this);
+
+		return voiture;
+	}
+
+	public Voiture removeVoiture(Voiture voiture) {
+		getVoitures().remove(voiture);
+		voiture.setPackage(null);
+
+		return voiture;
+	}
+
+}

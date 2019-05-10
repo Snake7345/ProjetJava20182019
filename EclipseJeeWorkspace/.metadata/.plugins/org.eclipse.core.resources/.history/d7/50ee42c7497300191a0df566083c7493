@@ -1,0 +1,31 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the voiture_commande database table.
+ * 
+ */
+@Entity
+@Table(name="voiture_commande")
+@NamedQuery(name="VoitureCommande.findAll", query="SELECT v FROM VoitureCommande v")
+public class VoitureCommande implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private VoitureCommandePK id;
+
+	public VoitureCommande() {
+	}
+
+	public VoitureCommandePK getId() {
+		return this.id;
+	}
+
+	public void setId(VoitureCommandePK id) {
+		this.id = id;
+	}
+
+}
