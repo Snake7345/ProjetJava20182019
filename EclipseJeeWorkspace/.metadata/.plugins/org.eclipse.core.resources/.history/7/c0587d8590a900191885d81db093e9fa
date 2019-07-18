@@ -1,0 +1,119 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the packages database table.
+ * 
+ */
+@Entity
+@Table(name="packages")
+@NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
+public class Package implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idPackages;
+
+	@Column(nullable=false)
+	private byte actif;
+
+	@Column(nullable=false, length=255)
+	private String descriptionPackages;
+
+	@Column(nullable=false, length=100)
+	private String nomPackages;
+
+	//bi-directional many-to-one association to OptionsPackage
+	@OneToMany(mappedBy="package")
+	private List<OptionsPackage> optionsPackages;
+
+	//bi-directional many-to-one association to Voiture
+	@OneToMany(mappedBy="package")
+	private List<Voiture> voitures;
+
+	public Package() {
+	}
+
+	public int getIdPackages() {
+		return this.idPackages;
+	}
+
+	public void setIdPackages(int idPackages) {
+		this.idPackages = idPackages;
+	}
+
+	public byte getActif() {
+		return this.actif;
+	}
+
+	public void setActif(byte actif) {
+		this.actif = actif;
+	}
+
+	public String getDescriptionPackages() {
+		return this.descriptionPackages;
+	}
+
+	public void setDescriptionPackages(String descriptionPackages) {
+		this.descriptionPackages = descriptionPackages;
+	}
+
+	public String getNomPackages() {
+		return this.nomPackages;
+	}
+
+	public void setNomPackages(String nomPackages) {
+		this.nomPackages = nomPackages;
+	}
+
+	public List<OptionsPackage> getOptionsPackages() {
+		return this.optionsPackages;
+	}
+
+	public void setOptionsPackages(List<OptionsPackage> optionsPackages) {
+		this.optionsPackages = optionsPackages;
+	}
+
+	public OptionsPackage addOptionsPackage(OptionsPackage optionsPackage) {
+		getOptionsPackages().add(optionsPackage);
+		optionsPackage.setPackage(this);
+
+		return optionsPackage;
+	}
+
+	public OptionsPackage removeOptionsPackage(OptionsPackage optionsPackage) {
+		getOptionsPackages().remove(optionsPackage);
+		optionsPackage.setPackage(null);
+
+		return optionsPackage;
+	}
+
+	public List<Voiture> getVoitures() {
+		return this.voitures;
+	}
+
+	public void setVoitures(List<Voiture> voitures) {
+		this.voitures = voitures;
+	}
+
+	public Voiture addVoiture(Voiture voiture) {
+		getVoitures().add(voiture);
+		voiture.setPackage(this);
+
+		return voiture;
+	}
+
+	public Voiture removeVoiture(Voiture voiture) {
+		getVoitures().remove(voiture);
+		voiture.setPackage(null);
+
+		return voiture;
+	}
+
+}

@@ -1,0 +1,93 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the moteur database table.
+ * 
+ */
+@Entity
+@Table(name="moteur")
+@NamedQuery(name="Moteur.findAll", query="SELECT m FROM Moteur m")
+public class Moteur implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idMoteur;
+
+	@Column(nullable=false)
+	private byte actif;
+
+	@Column(nullable=false)
+	private int cylindreeMoteur;
+
+	@Column(nullable=false, length=50)
+	private String typeMoteur;
+
+	//bi-directional many-to-one association to VoitureMoteur
+	@OneToMany(mappedBy="moteur")
+	private List<VoitureMoteur> voitureMoteurs;
+
+	public Moteur() {
+	}
+
+	public int getIdMoteur() {
+		return this.idMoteur;
+	}
+
+	public void setIdMoteur(int idMoteur) {
+		this.idMoteur = idMoteur;
+	}
+
+	public byte getActif() {
+		return this.actif;
+	}
+
+	public void setActif(byte actif) {
+		this.actif = actif;
+	}
+
+	public int getCylindreeMoteur() {
+		return this.cylindreeMoteur;
+	}
+
+	public void setCylindreeMoteur(int cylindreeMoteur) {
+		this.cylindreeMoteur = cylindreeMoteur;
+	}
+
+	public String getTypeMoteur() {
+		return this.typeMoteur;
+	}
+
+	public void setTypeMoteur(String typeMoteur) {
+		this.typeMoteur = typeMoteur;
+	}
+
+	public List<VoitureMoteur> getVoitureMoteurs() {
+		return this.voitureMoteurs;
+	}
+
+	public void setVoitureMoteurs(List<VoitureMoteur> voitureMoteurs) {
+		this.voitureMoteurs = voitureMoteurs;
+	}
+
+	public VoitureMoteur addVoitureMoteur(VoitureMoteur voitureMoteur) {
+		getVoitureMoteurs().add(voitureMoteur);
+		voitureMoteur.setMoteur(this);
+
+		return voitureMoteur;
+	}
+
+	public VoitureMoteur removeVoitureMoteur(VoitureMoteur voitureMoteur) {
+		getVoitureMoteurs().remove(voitureMoteur);
+		voitureMoteur.setMoteur(null);
+
+		return voitureMoteur;
+	}
+
+}

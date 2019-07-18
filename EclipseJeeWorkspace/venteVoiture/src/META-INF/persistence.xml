@@ -17,8 +17,8 @@
 		<class>venteVoiture.connection.Modele</class>
 		<class>venteVoiture.connection.Moteur</class>
 		<class>venteVoiture.connection.Option</class>
-		<class>venteVoiture.connection.OptionsPackage</class>
-		<class>venteVoiture.connection.Package</class>
+		<class>venteVoiture.connection.OptionsPack</class>
+		<class>venteVoiture.connection.Pack</class>
 		<class>venteVoiture.connection.Personne</class>
 		<class>venteVoiture.connection.PersonnesRole</class>
 		<class>venteVoiture.connection.Produit</class>

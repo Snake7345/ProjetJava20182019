@@ -1,0 +1,59 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the voiture_options database table.
+ * 
+ */
+@Entity
+@Table(name="voiture_options")
+@NamedQuery(name="VoitureOption.findAll", query="SELECT v FROM VoitureOption v")
+public class VoitureOption implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int id_voiture_options;
+
+	//bi-directional many-to-one association to Option
+	@ManyToOne
+	@JoinColumn(name="Options_voiture_IdOptions", nullable=false)
+	private Option option;
+
+	//bi-directional many-to-one association to Voiture
+	@ManyToOne
+	@JoinColumn(name="Voiture_IdNumChassisVoiture", nullable=false)
+	private Voiture voiture;
+
+	public VoitureOption() {
+	}
+
+	public int getId_voiture_options() {
+		return this.id_voiture_options;
+	}
+
+	public void setId_voiture_options(int id_voiture_options) {
+		this.id_voiture_options = id_voiture_options;
+	}
+
+	public Option getOption() {
+		return this.option;
+	}
+
+	public void setOption(Option option) {
+		this.option = option;
+	}
+
+	public Voiture getVoiture() {
+		return this.voiture;
+	}
+
+	public void setVoiture(Voiture voiture) {
+		this.voiture = voiture;
+	}
+
+}

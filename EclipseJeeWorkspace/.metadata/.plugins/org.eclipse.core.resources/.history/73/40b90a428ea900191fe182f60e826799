@@ -1,0 +1,82 @@
+package venteVoiture;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the marque database table.
+ * 
+ */
+@Entity
+@Table(name="marque")
+@NamedQuery(name="Marque.findAll", query="SELECT m FROM Marque m")
+public class Marque implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idMarque;
+
+	@Column(nullable=false)
+	private byte actif;
+
+	@Column(nullable=false, length=50)
+	private String nomMarque;
+
+	//bi-directional many-to-one association to Modele
+	@OneToMany(mappedBy="marque")
+	private List<Modele> modeles;
+
+	public Marque() {
+	}
+
+	public int getIdMarque() {
+		return this.idMarque;
+	}
+
+	public void setIdMarque(int idMarque) {
+		this.idMarque = idMarque;
+	}
+
+	public byte getActif() {
+		return this.actif;
+	}
+
+	public void setActif(byte actif) {
+		this.actif = actif;
+	}
+
+	public String getNomMarque() {
+		return this.nomMarque;
+	}
+
+	public void setNomMarque(String nomMarque) {
+		this.nomMarque = nomMarque;
+	}
+
+	public List<Modele> getModeles() {
+		return this.modeles;
+	}
+
+	public void setModeles(List<Modele> modeles) {
+		this.modeles = modeles;
+	}
+
+	public Modele addModele(Modele modele) {
+		getModeles().add(modele);
+		modele.setMarque(this);
+
+		return modele;
+	}
+
+	public Modele removeModele(Modele modele) {
+		getModeles().remove(modele);
+		modele.setMarque(null);
+
+		return modele;
+	}
+
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="dbventevoiture"  transaction-type="JTA">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<jta-data-source>java:comp/env/jdbc/venteVoiture</jta-data-source>
+		<class>venteVoiture.connection.Adresse</class>
+		<class>venteVoiture.connection.AdresseEntrepot</class>
+		<class>venteVoiture.connection.AdressePersonne</class>
+		<class>venteVoiture.connection.Commande</class>
+		<class>venteVoiture.connection.CommandeProduit</class>
+		<class>venteVoiture.connection.Couleur</class>
+		<class>venteVoiture.connection.Cp</class>
+		<class>venteVoiture.connection.Entrepot</class>
+		<class>venteVoiture.connection.Facture</class>
+		<class>venteVoiture.connection.Marque</class>
+		<class>venteVoiture.connection.ModePayment</class>
+		<class>venteVoiture.connection.Modele</class>
+		<class>venteVoiture.connection.Moteur</class>
+		<class>venteVoiture.connection.Option</class>
+		<class>venteVoiture.connection.Personne</class>
+		<class>venteVoiture.connection.PersonnesRole</class>
+		<class>venteVoiture.connection.Produit</class>
+		<class>venteVoiture.connection.Role</class>
+		<class>venteVoiture.connection.Voiture</class>
+		<class>venteVoiture.connection.VoitureCommande</class>
+		<class>venteVoiture.connection.VoitureMoteur</class>
+		<class>venteVoiture.connection.VoitureOption</class>
+		
+	</persistence-unit>
+</persistence>

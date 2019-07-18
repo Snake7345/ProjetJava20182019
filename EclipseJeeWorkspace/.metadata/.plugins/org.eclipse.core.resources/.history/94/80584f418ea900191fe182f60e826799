@@ -1,0 +1,121 @@
+package venteVoiture;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the adresse database table.
+ * 
+ */
+@Entity
+@Table(name="adresse")
+@NamedQuery(name="Adresse.findAll", query="SELECT a FROM Adresse a")
+public class Adresse implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idAdresse;
+
+	@Column(nullable=false, length=5)
+	private String boitePostalAdresse;
+
+	@Column(nullable=false, length=80)
+	private String rueAdresse;
+
+	//bi-directional many-to-one association to Cp
+	@ManyToOne
+	@JoinColumn(name="CP_IdCP", nullable=false)
+	private Cp cp;
+
+	//bi-directional many-to-one association to AdresseEntrepot
+	@OneToMany(mappedBy="adresse")
+	private List<AdresseEntrepot> adresseEntrepots;
+
+	//bi-directional many-to-one association to AdressePersonne
+	@OneToMany(mappedBy="adresse")
+	private List<AdressePersonne> adressePersonnes;
+
+	public Adresse() {
+	}
+
+	public int getIdAdresse() {
+		return this.idAdresse;
+	}
+
+	public void setIdAdresse(int idAdresse) {
+		this.idAdresse = idAdresse;
+	}
+
+	public String getBoitePostalAdresse() {
+		return this.boitePostalAdresse;
+	}
+
+	public void setBoitePostalAdresse(String boitePostalAdresse) {
+		this.boitePostalAdresse = boitePostalAdresse;
+	}
+
+	public String getRueAdresse() {
+		return this.rueAdresse;
+	}
+
+	public void setRueAdresse(String rueAdresse) {
+		this.rueAdresse = rueAdresse;
+	}
+
+	public Cp getCp() {
+		return this.cp;
+	}
+
+	public void setCp(Cp cp) {
+		this.cp = cp;
+	}
+
+	public List<AdresseEntrepot> getAdresseEntrepots() {
+		return this.adresseEntrepots;
+	}
+
+	public void setAdresseEntrepots(List<AdresseEntrepot> adresseEntrepots) {
+		this.adresseEntrepots = adresseEntrepots;
+	}
+
+	public AdresseEntrepot addAdresseEntrepot(AdresseEntrepot adresseEntrepot) {
+		getAdresseEntrepots().add(adresseEntrepot);
+		adresseEntrepot.setAdresse(this);
+
+		return adresseEntrepot;
+	}
+
+	public AdresseEntrepot removeAdresseEntrepot(AdresseEntrepot adresseEntrepot) {
+		getAdresseEntrepots().remove(adresseEntrepot);
+		adresseEntrepot.setAdresse(null);
+
+		return adresseEntrepot;
+	}
+
+	public List<AdressePersonne> getAdressePersonnes() {
+		return this.adressePersonnes;
+	}
+
+	public void setAdressePersonnes(List<AdressePersonne> adressePersonnes) {
+		this.adressePersonnes = adressePersonnes;
+	}
+
+	public AdressePersonne addAdressePersonne(AdressePersonne adressePersonne) {
+		getAdressePersonnes().add(adressePersonne);
+		adressePersonne.setAdresse(this);
+
+		return adressePersonne;
+	}
+
+	public AdressePersonne removeAdressePersonne(AdressePersonne adressePersonne) {
+		getAdressePersonnes().remove(adressePersonne);
+		adressePersonne.setAdresse(null);
+
+		return adressePersonne;
+	}
+
+}

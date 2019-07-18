@@ -1,0 +1,59 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the options_packages database table.
+ * 
+ */
+@Entity
+@Table(name="options_packages")
+@NamedQuery(name="OptionsPackage.findAll", query="SELECT o FROM OptionsPackage o")
+public class OptionsPackage implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int id_Options_Packages;
+
+	//bi-directional many-to-one association to Option
+	@ManyToOne
+	@JoinColumn(name="Options_idOptions", nullable=false)
+	private Option option;
+
+	//bi-directional many-to-one association to Package
+	@ManyToOne
+	@JoinColumn(name="Packages_Packages", nullable=false)
+	private Package package;
+
+	public OptionsPackage() {
+	}
+
+	public int getId_Options_Packages() {
+		return this.id_Options_Packages;
+	}
+
+	public void setId_Options_Packages(int id_Options_Packages) {
+		this.id_Options_Packages = id_Options_Packages;
+	}
+
+	public Option getOption() {
+		return this.option;
+	}
+
+	public void setOption(Option option) {
+		this.option = option;
+	}
+
+	public Package getPackage() {
+		return this.package;
+	}
+
+	public void setPackage(Package package) {
+		this.package = package;
+	}
+
+}

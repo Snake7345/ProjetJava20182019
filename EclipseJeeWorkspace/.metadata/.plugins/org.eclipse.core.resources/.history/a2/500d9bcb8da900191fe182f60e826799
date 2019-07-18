@@ -1,0 +1,119 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the options database table.
+ * 
+ */
+@Entity
+@Table(name="options")
+@NamedQuery(name="Option.findAll", query="SELECT o FROM Option o")
+public class Option implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idOptions;
+
+	@Column(nullable=false)
+	private byte actif;
+
+	@Column(nullable=false, length=50)
+	private String nomOptions;
+
+	@Column(nullable=false)
+	private float prix;
+
+	//bi-directional many-to-one association to OptionsPackage
+	@OneToMany(mappedBy="option")
+	private List<OptionsPackage> optionsPackages;
+
+	//bi-directional many-to-one association to VoitureOption
+	@OneToMany(mappedBy="option")
+	private List<VoitureOption> voitureOptions;
+
+	public Option() {
+	}
+
+	public int getIdOptions() {
+		return this.idOptions;
+	}
+
+	public void setIdOptions(int idOptions) {
+		this.idOptions = idOptions;
+	}
+
+	public byte getActif() {
+		return this.actif;
+	}
+
+	public void setActif(byte actif) {
+		this.actif = actif;
+	}
+
+	public String getNomOptions() {
+		return this.nomOptions;
+	}
+
+	public void setNomOptions(String nomOptions) {
+		this.nomOptions = nomOptions;
+	}
+
+	public float getPrix() {
+		return this.prix;
+	}
+
+	public void setPrix(float prix) {
+		this.prix = prix;
+	}
+
+	public List<OptionsPackage> getOptionsPackages() {
+		return this.optionsPackages;
+	}
+
+	public void setOptionsPackages(List<OptionsPackage> optionsPackages) {
+		this.optionsPackages = optionsPackages;
+	}
+
+	public OptionsPackage addOptionsPackage(OptionsPackage optionsPackage) {
+		getOptionsPackages().add(optionsPackage);
+		optionsPackage.setOption(this);
+
+		return optionsPackage;
+	}
+
+	public OptionsPackage removeOptionsPackage(OptionsPackage optionsPackage) {
+		getOptionsPackages().remove(optionsPackage);
+		optionsPackage.setOption(null);
+
+		return optionsPackage;
+	}
+
+	public List<VoitureOption> getVoitureOptions() {
+		return this.voitureOptions;
+	}
+
+	public void setVoitureOptions(List<VoitureOption> voitureOptions) {
+		this.voitureOptions = voitureOptions;
+	}
+
+	public VoitureOption addVoitureOption(VoitureOption voitureOption) {
+		getVoitureOptions().add(voitureOption);
+		voitureOption.setOption(this);
+
+		return voitureOption;
+	}
+
+	public VoitureOption removeVoitureOption(VoitureOption voitureOption) {
+		getVoitureOptions().remove(voitureOption);
+		voitureOption.setOption(null);
+
+		return voitureOption;
+	}
+
+}
