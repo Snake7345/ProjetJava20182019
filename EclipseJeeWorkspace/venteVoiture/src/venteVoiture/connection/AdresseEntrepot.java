@@ -26,7 +26,7 @@ public class AdresseEntrepot implements Serializable {
 
 	//bi-directional many-to-one association to Entrepot
 	@ManyToOne
-	@JoinColumn(name="Entrepot_idEntrepot", nullable=false)
+	@JoinColumn(name="Entrepot_IdEntrepot", nullable=false)
 	private Entrepot entrepot;
 
 	public AdresseEntrepot() {

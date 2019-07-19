@@ -21,7 +21,7 @@ public class VoitureOption implements Serializable {
 
 	//bi-directional many-to-one association to Option
 	@ManyToOne
-	@JoinColumn(name="Options_voiture_idOptions", nullable=false)
+	@JoinColumn(name="Options_IdOptions", nullable=false)
 	private Option option;
 
 	//bi-directional many-to-one association to Voiture
