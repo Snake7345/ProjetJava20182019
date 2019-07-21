@@ -29,9 +29,6 @@ public class Produit implements Serializable {
 	@Column(nullable=false, length=100)
 	private String nomProduit;
 
-	@Column(nullable=false)
-	private float prix;
-
 	//bi-directional many-to-one association to CommandeProduit
 	@OneToMany(mappedBy="produit")
 	private List<CommandeProduit> commandeProduits;
@@ -69,14 +66,6 @@ public class Produit implements Serializable {
 
 	public void setNomProduit(String nomProduit) {
 		this.nomProduit = nomProduit;
-	}
-
-	public float getPrix() {
-		return this.prix;
-	}
-
-	public void setPrix(float prix) {
-		this.prix = prix;
 	}
 
 	public List<CommandeProduit> getCommandeProduits() {

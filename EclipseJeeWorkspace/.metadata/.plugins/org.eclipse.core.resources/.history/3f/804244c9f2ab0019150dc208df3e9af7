@@ -1,0 +1,149 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * The persistent class for the commande database table.
+ * 
+ */
+@Entity
+@Table(name="commande")
+@NamedQuery(name="Commande.findAll", query="SELECT c FROM Commande c")
+public class Commande implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idCommande;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable=false)
+	private Date dateCommande;
+
+	@Column(nullable=false, length=45)
+	private String etatCommande;
+
+	//bi-directional many-to-one association to Personne
+	@ManyToOne
+	@JoinColumn(name="Personne_IdPersonne", nullable=false)
+	private Personne personne;
+
+	//bi-directional many-to-one association to CommandeProduit
+	@OneToMany(mappedBy="commande")
+	private List<CommandeProduit> commandeProduits;
+
+	//bi-directional many-to-one association to Facture
+	@OneToMany(mappedBy="commande")
+	private List<Facture> factures;
+
+	//bi-directional many-to-one association to VoitureCommande
+	@OneToMany(mappedBy="commande")
+	private List<VoitureCommande> voitureCommandes;
+
+	public Commande() {
+	}
+
+	public int getIdCommande() {
+		return this.idCommande;
+	}
+
+	public void setIdCommande(int idCommande) {
+		this.idCommande = idCommande;
+	}
+
+	public Date getDateCommande() {
+		return this.dateCommande;
+	}
+
+	public void setDateCommande(Date dateCommande) {
+		this.dateCommande = dateCommande;
+	}
+
+	public String getEtatCommande() {
+		return this.etatCommande;
+	}
+
+	public void setEtatCommande(String etatCommande) {
+		this.etatCommande = etatCommande;
+	}
+
+	public Personne getPersonne() {
+		return this.personne;
+	}
+
+	public void setPersonne(Personne personne) {
+		this.personne = personne;
+	}
+
+	public List<CommandeProduit> getCommandeProduits() {
+		return this.commandeProduits;
+	}
+
+	public void setCommandeProduits(List<CommandeProduit> commandeProduits) {
+		this.commandeProduits = commandeProduits;
+	}
+
+	public CommandeProduit addCommandeProduit(CommandeProduit commandeProduit) {
+		getCommandeProduits().add(commandeProduit);
+		commandeProduit.setCommande(this);
+
+		return commandeProduit;
+	}
+
+	public CommandeProduit removeCommandeProduit(CommandeProduit commandeProduit) {
+		getCommandeProduits().remove(commandeProduit);
+		commandeProduit.setCommande(null);
+
+		return commandeProduit;
+	}
+
+	public List<Facture> getFactures() {
+		return this.factures;
+	}
+
+	public void setFactures(List<Facture> factures) {
+		this.factures = factures;
+	}
+
+	public Facture addFacture(Facture facture) {
+		getFactures().add(facture);
+		facture.setCommande(this);
+
+		return facture;
+	}
+
+	public Facture removeFacture(Facture facture) {
+		getFactures().remove(facture);
+		facture.setCommande(null);
+
+		return facture;
+	}
+
+	public List<VoitureCommande> getVoitureCommandes() {
+		return this.voitureCommandes;
+	}
+
+	public void setVoitureCommandes(List<VoitureCommande> voitureCommandes) {
+		this.voitureCommandes = voitureCommandes;
+	}
+
+	public VoitureCommande addVoitureCommande(VoitureCommande voitureCommande) {
+		getVoitureCommandes().add(voitureCommande);
+		voitureCommande.setCommande(this);
+
+		return voitureCommande;
+	}
+
+	public VoitureCommande removeVoitureCommande(VoitureCommande voitureCommande) {
+		getVoitureCommandes().remove(voitureCommande);
+		voitureCommande.setCommande(null);
+
+		return voitureCommande;
+	}
+
+}

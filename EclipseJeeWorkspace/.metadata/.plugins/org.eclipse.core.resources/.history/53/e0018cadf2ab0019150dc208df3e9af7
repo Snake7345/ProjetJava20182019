@@ -29,9 +29,6 @@ public class Pack implements Serializable {
 	@Column(nullable=false, length=100)
 	private String nomPack;
 
-	@Column(nullable=false)
-	private float prix;
-
 	//bi-directional many-to-one association to OptionsPack
 	@OneToMany(mappedBy="pack")
 	private List<OptionsPack> optionsPacks;
@@ -73,14 +70,6 @@ public class Pack implements Serializable {
 
 	public void setNomPack(String nomPack) {
 		this.nomPack = nomPack;
-	}
-
-	public float getPrix() {
-		return this.prix;
-	}
-
-	public void setPrix(float prix) {
-		this.prix = prix;
 	}
 
 	public List<OptionsPack> getOptionsPacks() {

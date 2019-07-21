@@ -1,0 +1,186 @@
+package venteVoiture.connection;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the voiture database table.
+ * 
+ */
+@Entity
+@Table(name="voiture")
+@NamedQuery(name="Voiture.findAll", query="SELECT v FROM Voiture v")
+public class Voiture implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(unique=true, nullable=false)
+	private int idNumChassisVoiture;
+
+	@Column(nullable=false)
+	private int actif;
+
+	@Column(nullable=false)
+	private float prix;
+
+	//bi-directional many-to-one association to Couleur
+	@ManyToOne
+	@JoinColumn(name="Couleur_IdCouleur", nullable=false)
+	private Couleur couleur;
+
+	//bi-directional many-to-one association to Entrepot
+	@ManyToOne
+	@JoinColumn(name="Entrepot_IdEntrepot", nullable=false)
+	private Entrepot entrepot;
+
+	//bi-directional many-to-one association to Modele
+	@ManyToOne
+	@JoinColumn(name="Modele_IdModele", nullable=false)
+	private Modele modele;
+
+	//bi-directional many-to-one association to Pack
+	@ManyToOne
+	@JoinColumn(name="Pack_IdPack", nullable=false)
+	private Pack pack;
+
+	//bi-directional many-to-one association to VoitureCommande
+	@OneToMany(mappedBy="voiture")
+	private List<VoitureCommande> voitureCommandes;
+
+	//bi-directional many-to-one association to VoitureMoteur
+	@OneToMany(mappedBy="voiture")
+	private List<VoitureMoteur> voitureMoteurs;
+
+	//bi-directional many-to-one association to VoitureOption
+	@OneToMany(mappedBy="voiture")
+	private List<VoitureOption> voitureOptions;
+
+	public Voiture() {
+	}
+
+	public int getIdNumChassisVoiture() {
+		return this.idNumChassisVoiture;
+	}
+
+	public void setIdNumChassisVoiture(int idNumChassisVoiture) {
+		this.idNumChassisVoiture = idNumChassisVoiture;
+	}
+
+	public int getActif() {
+		return this.actif;
+	}
+
+	public void setActif(int actif) {
+		this.actif = actif;
+	}
+
+	public float getPrix() {
+		return this.prix;
+	}
+
+	public void setPrix(float prix) {
+		this.prix = prix;
+	}
+
+	public Couleur getCouleur() {
+		return this.couleur;
+	}
+
+	public void setCouleur(Couleur couleur) {
+		this.couleur = couleur;
+	}
+
+	public Entrepot getEntrepot() {
+		return this.entrepot;
+	}
+
+	public void setEntrepot(Entrepot entrepot) {
+		this.entrepot = entrepot;
+	}
+
+	public Modele getModele() {
+		return this.modele;
+	}
+
+	public void setModele(Modele modele) {
+		this.modele = modele;
+	}
+
+	public Pack getPack() {
+		return this.pack;
+	}
+
+	public void setPack(Pack pack) {
+		this.pack = pack;
+	}
+
+	public List<VoitureCommande> getVoitureCommandes() {
+		return this.voitureCommandes;
+	}
+
+	public void setVoitureCommandes(List<VoitureCommande> voitureCommandes) {
+		this.voitureCommandes = voitureCommandes;
+	}
+
+	public VoitureCommande addVoitureCommande(VoitureCommande voitureCommande) {
+		getVoitureCommandes().add(voitureCommande);
+		voitureCommande.setVoiture(this);
+
+		return voitureCommande;
+	}
+
+	public VoitureCommande removeVoitureCommande(VoitureCommande voitureCommande) {
+		getVoitureCommandes().remove(voitureCommande);
+		voitureCommande.setVoiture(null);
+
+		return voitureCommande;
+	}
+
+	public List<VoitureMoteur> getVoitureMoteurs() {
+		return this.voitureMoteurs;
+	}
+
+	public void setVoitureMoteurs(List<VoitureMoteur> voitureMoteurs) {
+		this.voitureMoteurs = voitureMoteurs;
+	}
+
+	public VoitureMoteur addVoitureMoteur(VoitureMoteur voitureMoteur) {
+		getVoitureMoteurs().add(voitureMoteur);
+		voitureMoteur.setVoiture(this);
+
+		return voitureMoteur;
+	}
+
+	public VoitureMoteur removeVoitureMoteur(VoitureMoteur voitureMoteur) {
+		getVoitureMoteurs().remove(voitureMoteur);
+		voitureMoteur.setVoiture(null);
+
+		return voitureMoteur;
+	}
+
+	public List<VoitureOption> getVoitureOptions() {
+		return this.voitureOptions;
+	}
+
+	public void setVoitureOptions(List<VoitureOption> voitureOptions) {
+		this.voitureOptions = voitureOptions;
+	}
+
+	public VoitureOption addVoitureOption(VoitureOption voitureOption) {
+		getVoitureOptions().add(voitureOption);
+		voitureOption.setVoiture(this);
+
+		return voitureOption;
+	}
+
+	public VoitureOption removeVoitureOption(VoitureOption voitureOption) {
+		getVoitureOptions().remove(voitureOption);
+		voitureOption.setVoiture(null);
+
+		return voitureOption;
+	}
+
+}

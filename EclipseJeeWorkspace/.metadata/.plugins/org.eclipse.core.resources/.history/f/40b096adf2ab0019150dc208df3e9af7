@@ -24,9 +24,6 @@ public class Facture implements Serializable {
 	@Column(nullable=false)
 	private Date dateFacture;
 
-	@Column(nullable=false)
-	private float prixTotal;
-
 	//bi-directional many-to-one association to Commande
 	@ManyToOne
 	@JoinColumn(name="Commande_IdCommande", nullable=false)
@@ -54,14 +51,6 @@ public class Facture implements Serializable {
 
 	public void setDateFacture(Date dateFacture) {
 		this.dateFacture = dateFacture;
-	}
-
-	public float getPrixTotal() {
-		return this.prixTotal;
-	}
-
-	public void setPrixTotal(float prixTotal) {
-		this.prixTotal = prixTotal;
 	}
 
 	public Commande getCommande() {
