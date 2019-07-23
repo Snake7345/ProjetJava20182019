@@ -1,0 +1,78 @@
+package entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
+
+
+/**
+ * The persistent class for the facture database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Facture.findAll", query="SELECT f FROM Facture f")
+public class Facture implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int idFacture;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateFacture;
+
+	private float prixTotal;
+
+	//bi-directional many-to-one association to ModePayment
+	@ManyToOne
+	@JoinColumn(name="Mode_payment_IdMode")
+	private ModePayment modePayment;
+
+	//bi-directional one-to-one association to Commande
+	@OneToOne(mappedBy="facture")
+	private Commande commande;
+
+	public Facture() {
+	}
+
+	public int getIdFacture() {
+		return this.idFacture;
+	}
+
+	public void setIdFacture(int idFacture) {
+		this.idFacture = idFacture;
+	}
+
+	public Date getDateFacture() {
+		return this.dateFacture;
+	}
+
+	public void setDateFacture(Date dateFacture) {
+		this.dateFacture = dateFacture;
+	}
+
+	public float getPrixTotal() {
+		return this.prixTotal;
+	}
+
+	public void setPrixTotal(float prixTotal) {
+		this.prixTotal = prixTotal;
+	}
+
+	public ModePayment getModePayment() {
+		return this.modePayment;
+	}
+
+	public void setModePayment(ModePayment modePayment) {
+		this.modePayment = modePayment;
+	}
+
+	public Commande getCommande() {
+		return this.commande;
+	}
+
+	public void setCommande(Commande commande) {
+		this.commande = commande;
+	}
+
+}

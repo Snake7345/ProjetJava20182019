@@ -1,0 +1,178 @@
+package entities;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * The persistent class for the personne database table.
+ * 
+ */
+@Entity
+@Table(name="personne")
+@NamedQuery(name="Personne.findAll", query="SELECT p FROM Personne p")
+public class Personne implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private PersonnePK id;
+
+	@Column(nullable=false)
+	private boolean actif;
+
+	@Temporal(TemporalType.DATE)
+	@Column(nullable=false)
+	private Date datedenaissance;
+
+	@Column(nullable=false, length=45)
+	private String mailPersonne;
+
+	@Column(nullable=false, length=45)
+	private String mdpPersonne;
+
+	@Column(nullable=false, length=45)
+	private String nomPersonne;
+
+	@Column(nullable=false, length=50)
+	private String prenomPersonne;
+
+	//bi-directional many-to-one association to AdressePersonne
+	@OneToMany(mappedBy="personne")
+	private List<AdressePersonne> adressePersonnes;
+
+	//bi-directional many-to-one association to Commande
+	@OneToMany(mappedBy="personne")
+	private List<Commande> commandes;
+
+	//bi-directional many-to-one association to Entrepot
+	@ManyToOne
+	@JoinColumn(name="Entrepot_IdEntrepot", nullable=false)
+	private Entrepot entrepot;
+
+	//bi-directional many-to-one association to Role
+	@ManyToOne
+	@JoinColumn(name="Role_IdRole", nullable=false, insertable=false, updatable=false)
+	private Role role;
+
+	public Personne() {
+	}
+
+	public PersonnePK getId() {
+		return this.id;
+	}
+
+	public void setId(PersonnePK id) {
+		this.id = id;
+	}
+
+	public boolean getActif() {
+		return this.actif;
+	}
+
+	public void setActif(boolean actif) {
+		this.actif = actif;
+	}
+
+	public Date getDatedenaissance() {
+		return this.datedenaissance;
+	}
+
+	public void setDatedenaissance(Date datedenaissance) {
+		this.datedenaissance = datedenaissance;
+	}
+
+	public String getMailPersonne() {
+		return this.mailPersonne;
+	}
+
+	public void setMailPersonne(String mailPersonne) {
+		this.mailPersonne = mailPersonne;
+	}
+
+	public String getMdpPersonne() {
+		return this.mdpPersonne;
+	}
+
+	public void setMdpPersonne(String mdpPersonne) {
+		this.mdpPersonne = mdpPersonne;
+	}
+
+	public String getNomPersonne() {
+		return this.nomPersonne;
+	}
+
+	public void setNomPersonne(String nomPersonne) {
+		this.nomPersonne = nomPersonne;
+	}
+
+	public String getPrenomPersonne() {
+		return this.prenomPersonne;
+	}
+
+	public void setPrenomPersonne(String prenomPersonne) {
+		this.prenomPersonne = prenomPersonne;
+	}
+
+	public List<AdressePersonne> getAdressePersonnes() {
+		return this.adressePersonnes;
+	}
+
+	public void setAdressePersonnes(List<AdressePersonne> adressePersonnes) {
+		this.adressePersonnes = adressePersonnes;
+	}
+
+	public AdressePersonne addAdressePersonne(AdressePersonne adressePersonne) {
+		getAdressePersonnes().add(adressePersonne);
+		adressePersonne.setPersonne(this);
+
+		return adressePersonne;
+	}
+
+	public AdressePersonne removeAdressePersonne(AdressePersonne adressePersonne) {
+		getAdressePersonnes().remove(adressePersonne);
+		adressePersonne.setPersonne(null);
+
+		return adressePersonne;
+	}
+
+	public List<Commande> getCommandes() {
+		return this.commandes;
+	}
+
+	public void setCommandes(List<Commande> commandes) {
+		this.commandes = commandes;
+	}
+
+	public Commande addCommande(Commande commande) {
+		getCommandes().add(commande);
+		commande.setPersonne(this);
+
+		return commande;
+	}
+
+	public Commande removeCommande(Commande commande) {
+		getCommandes().remove(commande);
+		commande.setPersonne(null);
+
+		return commande;
+	}
+
+	public Entrepot getEntrepot() {
+		return this.entrepot;
+	}
+
+	public void setEntrepot(Entrepot entrepot) {
+		this.entrepot = entrepot;
+	}
+
+	public Role getRole() {
+		return this.role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+}

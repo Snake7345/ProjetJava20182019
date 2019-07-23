@@ -3,30 +3,25 @@
 	<persistence-unit name="dbventevoiture"  transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>java:comp/env/jdbc/venteVoiture</jta-data-source>
-		<class>venteVoiture.connection.Adresse</class>
-		<class>venteVoiture.connection.AdresseEntrepot</class>
-		<class>venteVoiture.connection.AdressePersonne</class>
-		<class>venteVoiture.connection.Commande</class>
-		<class>venteVoiture.connection.CommandeProduit</class>
-		<class>venteVoiture.connection.Couleur</class>
-		<class>venteVoiture.connection.Cp</class>
-		<class>venteVoiture.connection.Entrepot</class>
-		<class>venteVoiture.connection.Facture</class>
-		<class>venteVoiture.connection.Marque</class>
-		<class>venteVoiture.connection.ModePayment</class>
-		<class>venteVoiture.connection.Modele</class>
-		<class>venteVoiture.connection.Moteur</class>
-		<class>venteVoiture.connection.Option</class>
-		<class>venteVoiture.connection.OptionsPack</class>
-		<class>venteVoiture.connection.Pack</class>
-		<class>venteVoiture.connection.Personne</class>
-		<class>venteVoiture.connection.PersonnesRole</class>
-		<class>venteVoiture.connection.Produit</class>
-		<class>venteVoiture.connection.Role</class>
-		<class>venteVoiture.connection.Voiture</class>
-		<class>venteVoiture.connection.VoitureCommande</class>
-		<class>venteVoiture.connection.VoitureMoteur</class>
-		<class>venteVoiture.connection.VoitureOption</class>
+		<class>entities.Adresse</class>
+		<class>entities.AdressePersonne</class>
+		<class>entities.Commande</class>
+		<class>entities.CommandeProduit</class>
+		<class>entities.Couleur</class>
+		<class>entities.Cp</class>
+		<class>entities.Entrepot</class>
+		<class>entities.Facture</class>
+		<class>entities.Marque</class>
+		<class>entities.ModePayment</class>
+		<class>entities.Modele</class>
+		<class>entities.Moteur</class>
+		<class>entities.Option</class>
+		<class>entities.Pack</class>
+		<class>entities.Personne</class>
+		<class>entities.Produit</class>
+		<class>entities.Role</class>
+		<class>entities.Voiture</class>
+		<class>entities.VoitureOption</class>
 		
 	</persistence-unit>
 </persistence>
